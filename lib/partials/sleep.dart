@@ -31,7 +31,7 @@ class _SleepPageState extends State<SleepPage> {
     });
   }
 
-  void _updateLabels(int init, int end) {
+  void _updateLabels(int init, int end, int x) {
     setState(() {
       inBedTime = init;
       outBedTime = end;
@@ -80,7 +80,7 @@ class _SleepPageState extends State<SleepPage> {
             borderRadius: BorderRadius.circular(50.0),
           ),
           onPressed: _shuffle,
-        ),
+        )
       ],
     );
   }
