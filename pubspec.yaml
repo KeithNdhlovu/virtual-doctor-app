@@ -27,6 +27,9 @@ dependencies:
   # English words dictionary
   english_words: ^3.1.0
 
+  # A customizable circular slider for Flutter.
+  flutter_circular_slider : ^2.5.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -1,4 +1,10 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+
+import 'package:flutter_circular_slider/flutter_circular_slider.dart';
+
+import 'partials/home.dart';
 
 void main() => runApp(MyApp());
 
@@ -6,15 +12,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Le Flutter',
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Le Flutter'),
-        ),
-        body: const Center(
-          child: const Text('Hello World, from Le Flutters'),
-        ),
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
       ),
+      home: HomePage(),
     );
   }
 }
