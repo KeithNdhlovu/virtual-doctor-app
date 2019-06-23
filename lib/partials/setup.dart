@@ -13,13 +13,11 @@ class SetupPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final SetupBloc setupBloc = Provider.of<SetupBloc>(context);
-
     final appColor = Color.fromRGBO(147, 1, 142, 1);
 
     final ipField = TextField(
       style: style,
-      onChanged: setupBloc.setIPAddress,
+      onChanged: (String ip) => {},
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
           hintText: "IP Address",
