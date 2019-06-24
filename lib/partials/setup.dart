@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import 'package:heart_monitor/blocs/setup_bloc.dart';
 
 class SetupPage extends StatelessWidget {
   

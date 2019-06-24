@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:heart_monitor/partials/setup.dart';
 import 'pulse.dart';
 import '_login.dart';
 
@@ -14,7 +15,7 @@ class HomePage extends StatelessWidget {
             //   fit: BoxFit.cover,
             // ),
           ),
-          child: LoginPage()),
+          child: SetupPage()),
     ));
   }
 }
