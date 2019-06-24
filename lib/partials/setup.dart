@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:heart_monitor/blocs/setup_bloc.dart';
+import 'package:provider/provider.dart';
 
 class SetupPage extends StatelessWidget {
   
@@ -11,10 +13,11 @@ class SetupPage extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final appColor = Color.fromRGBO(147, 1, 142, 1);
+    final setupBloc =  Provider.of<SetupBloc>(context);
 
     final ipField = TextField(
       style: style,
-      onChanged: (String ip) => {},
+      onChanged: (String ip) => setupBloc.ipAddress = ip,
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
           hintText: "IP Address",
@@ -50,7 +53,7 @@ class SetupPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
               Padding(
-                padding: EdgeInsets.only(bottom: 20),  
+                padding: EdgeInsets.only(bottom: 20, top: 20),  
                 child: SizedBox(
                   height: 155.0,
                   child: Image.asset(
@@ -69,7 +72,7 @@ class SetupPage extends StatelessWidget {
                     child: Column(children: <Widget>[
                       SizedBox(height: 45.0), ipField,
                       SizedBox(height: 35.0), continueButton,
-                      SizedBox(height: 15.0),
+                      SizedBox(height: 15.0)
                     ])
                   )
               )
