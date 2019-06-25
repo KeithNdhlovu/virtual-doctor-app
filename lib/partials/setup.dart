@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 
 class SetupPage extends StatelessWidget {
   
-  TextStyle style = TextStyle(
+  final TextStyle style = TextStyle(
     fontFamily: 'Montserrat', 
     fontSize: 20.0
   );
@@ -33,7 +33,7 @@ class SetupPage extends StatelessWidget {
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () {},
-        child: Text("Continue",
+        child: Text("Continues",
             textAlign: TextAlign.center,
             style: style.copyWith(
               color: Colors.white, fontWeight: FontWeight.bold),
@@ -64,7 +64,7 @@ class SetupPage extends StatelessWidget {
               ),
               SizedBox(
                 height: 50,
-                child: Text("Virtual Doctor", style: new TextStyle(fontSize: 25, color: Colors.white)),
+                child: Text("Virtual Doctors", style: new TextStyle(fontSize: 25, color: Colors.white)),
               ),
               Card( 
                   child: Padding(
