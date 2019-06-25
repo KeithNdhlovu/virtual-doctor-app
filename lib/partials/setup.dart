@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:heart_monitor/blocs/setup_bloc.dart';
+import 'package:heart_monitor/partials/login.dart';
 import 'package:provider/provider.dart';
 
 class SetupPage extends StatelessWidget {
@@ -9,15 +10,15 @@ class SetupPage extends StatelessWidget {
     fontSize: 20.0
   );
 
+
   @override
   Widget build(BuildContext context) {
 
-    final appColor = Color.fromRGBO(147, 1, 142, 1);
-    final setupBloc =  Provider.of<SetupBloc>(context);
+    final _setupBloc =  Provider.of<SetupBloc>(context);
 
-    final ipField = TextField(
+    final _ipField = TextField(
       style: style,
-      onChanged: (String ip) => setupBloc.ipAddress = ip,
+      onChanged: (String ip) => _setupBloc.ipAddress = ip,
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
           hintText: "IP Address",
@@ -25,14 +26,19 @@ class SetupPage extends StatelessWidget {
               OutlineInputBorder(borderRadius: BorderRadius.circular(5))),
     );
 
-    final continueButton = Material(
+    final _continueButton = Material(
       elevation: 5.0,
       borderRadius: BorderRadius.circular(5),
-      color: appColor,
+      color: Theme.of(context).primaryColor,
       child: MaterialButton(
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => LoginPage()),
+          );
+        },
         child: Text("Continues",
             textAlign: TextAlign.center,
             style: style.copyWith(
@@ -42,7 +48,7 @@ class SetupPage extends StatelessWidget {
     );
 
     return Scaffold(
-      backgroundColor: appColor,
+      backgroundColor: Theme.of(context).primaryColor,
       body: SingleChildScrollView(
       child: Center(
         child: Container(
@@ -70,8 +76,8 @@ class SetupPage extends StatelessWidget {
                   child: Padding(
                     padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
                     child: Column(children: <Widget>[
-                      SizedBox(height: 45.0), ipField,
-                      SizedBox(height: 35.0), continueButton,
+                      SizedBox(height: 45.0), _ipField,
+                      SizedBox(height: 35.0), _continueButton,
                       SizedBox(height: 15.0)
                     ])
                   )

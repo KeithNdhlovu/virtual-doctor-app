@@ -28,6 +28,10 @@ class MyApp extends StatelessWidget {
       child: Consumer<SetupBloc>(
         builder: (context, counter, _) {
           return MaterialApp(
+            theme: new ThemeData(
+              primaryColor: Color.fromRGBO(147, 1, 142, 1), 
+              accentColor: Colors.deepPurpleAccent
+            ),
             home: SetupPage(),
           );
         },
