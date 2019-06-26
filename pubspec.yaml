@@ -35,6 +35,8 @@ dependencies:
   # A customizable circular slider for Flutter.
   flutter_circular_slider : ^2.5.0
 
+  dio: ^1.0.14
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

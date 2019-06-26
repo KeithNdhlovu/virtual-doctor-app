@@ -36,7 +36,7 @@ class SetupPage extends StatelessWidget {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => LoginPage()),
+            MaterialPageRoute(builder: (context) => LoginPage(title: "Login"))
           );
         },
         child: Text("Continues",
@@ -70,7 +70,7 @@ class SetupPage extends StatelessWidget {
               ),
               SizedBox(
                 height: 50,
-                child: Text("Virtual Doctors", style: new TextStyle(fontSize: 25, color: Colors.white)),
+                child: Text("Virtual Doctor", style: new TextStyle(fontSize: 25, color: Colors.white)),
               ),
               Card( 
                   child: Padding(

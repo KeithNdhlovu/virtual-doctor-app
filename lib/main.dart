@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:heart_monitor/blocs/setup_bloc.dart';
-import 'package:heart_monitor/partials/_login.dart';
 import 'package:heart_monitor/partials/setup.dart';
 import 'package:heart_monitor/partials/sleep.dart';
 import 'package:provider/provider.dart';
