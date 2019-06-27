@@ -8,15 +8,6 @@ import 'partials/home.dart';
 
 void main() => runApp(MyApp());
 
-// class MyApp extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       home: LoginPage()
-//     );
-//   }
-// }
-
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -31,7 +22,7 @@ class MyApp extends StatelessWidget {
               primaryColor: Color.fromRGBO(147, 1, 142, 1), 
               accentColor: Colors.deepPurpleAccent
             ),
-            home: SetupPage(),
+            home: Scaffold(body: SetupPage()),
           );
         },
       ),

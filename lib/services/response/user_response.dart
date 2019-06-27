@@ -2,21 +2,21 @@
 import 'package:heart_monitor/models/user.dart';
 
 class UserResponse {
-  final List<User> results;
+  final User user;
   final String error;
 
-  UserResponse({this.results, this.error});
+  UserResponse({this.user, this.error});
 
   factory UserResponse.fromJson(Map<String, dynamic> json) {
     return UserResponse(
-      results: (json["results"] as List).map((i) => new User.fromJson(i)).toList(),
+      user: new User.fromJson(json["data"]),
       error: ""
     );
   }
 
   factory UserResponse.withError(String errorValue) {
     return UserResponse(
-      results: List(),
+      user: null,
       error: errorValue
     );
   }

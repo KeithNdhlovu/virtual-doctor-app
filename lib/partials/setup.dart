@@ -10,7 +10,6 @@ class SetupPage extends StatelessWidget {
     fontSize: 20.0
   );
 
-
   @override
   Widget build(BuildContext context) {
 
@@ -34,10 +33,18 @@ class SetupPage extends StatelessWidget {
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () {
+
+          if (_setupBloc.ipAddress.isEmpty) {
+            final snackBar = SnackBar(content: Text("Please Enter IP Address to continue"));
+            Scaffold.of(context).showSnackBar(snackBar);
+            return;
+          }
+
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => LoginPage(title: "Login"))
           );
+          
         },
         child: Text("Continues",
             textAlign: TextAlign.center,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:heart_monitor/partials/login.dart';
 import 'package:heart_monitor/partials/setup.dart';
-import 'pulse.dart';
-import '_login.dart';
+import 'package:heart_monitor/partials/sleep.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -10,12 +10,12 @@ class HomePage extends StatelessWidget {
       body: SafeArea(
       child: Container(
           decoration: BoxDecoration(
-            // image: DecorationImage(
-            //   image: AssetImage('images/background_morning.png'),
-            //   fit: BoxFit.cover,
-            // ),
+            image: DecorationImage(
+              image: AssetImage('images/background_morning.png'),
+              fit: BoxFit.cover,
+            ),
           ),
-          child: SetupPage()),
+          child: SleepPage()),
     ));
   }
 }
