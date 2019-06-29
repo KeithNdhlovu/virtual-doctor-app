@@ -10,7 +10,7 @@ class UserResponse {
   factory UserResponse.fromJson(Map<String, dynamic> json) {
     return UserResponse(
       user: new User.fromJson(json["data"]),
-      error: ""
+      error: null
     );
   }
 

@@ -15,6 +15,27 @@ class _LoginPageState extends State<LoginPage> {
     fontSize: 20.0
   );
 
+  String _username = "";
+  String _password = "";
+
+  void _onUsernameChange(String username) {
+    setState(() {
+      _username = username;
+    });
+  }
+
+  void _onPasswordChange(String password) {
+    setState(() {
+      _password = password;
+    });
+  }
+
+  void _onPostLogin(BuildContext context) {
+    
+    // we need to do an API call to post our details
+    
+  }
+
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -26,6 +47,7 @@ class _LoginPageState extends State<LoginPage> {
 
     final emailField = TextField(
       style: style,
+      onChanged: this._onUsernameChange,
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
           hintText: "Email",
@@ -36,6 +58,7 @@ class _LoginPageState extends State<LoginPage> {
     final passwordField = TextField(
       obscureText: true,
       style: style,
+      onChanged: this._onPasswordChange,
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
           hintText: "Password",
