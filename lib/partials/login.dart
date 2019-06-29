@@ -49,6 +49,9 @@ class _LoginPageState extends State<LoginPage> {
               OutlineInputBorder(borderRadius: BorderRadius.circular(5))),
     );
 
+    // Update the build context of the user bloc
+    _userBloc.context = context;
+
     final passwordField = TextField(
       obscureText: true,
       style: style,
@@ -115,7 +118,7 @@ class _LoginPageState extends State<LoginPage> {
                             style: TextStyle(color: Colors.red),
                           )
                         ],
-                      ) : Text("lol"),
+                      ) : Text(""),
                       SizedBox(height: 25.0), emailField,
                       SizedBox(height: 25.0), passwordField,
                       SizedBox(height: 35.0), loginButon,

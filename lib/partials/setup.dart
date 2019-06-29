@@ -49,6 +49,9 @@ class SetupPage extends StatelessWidget {
             context,
             MaterialPageRoute(builder: (context) => LoginPage(title: "Login"))
           );
+
+          // Navigator.of(context)
+          //   .pushReplacementNamed("/login");
           
         },
         child: Text("Continue",

@@ -40,7 +40,7 @@ class _SleepPageState extends State<SleepPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return _sleepPage(Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         Text(
@@ -82,7 +82,7 @@ class _SleepPageState extends State<SleepPage> {
           onPressed: _shuffle,
         )
       ],
-    );
+    ));
   }
 
   Widget _formatBedTime(String pre, int time) {
@@ -115,4 +115,18 @@ class _SleepPageState extends State<SleepPage> {
   }
 
   int _generateRandomTime() => Random().nextInt(288);
+
+  Widget _sleepPage(Column column) {
+    return Scaffold(
+      body: SafeArea(
+      child: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('images/background_morning.png'),
+              fit: BoxFit.cover,
+            ),
+          ),
+          child: column),
+    ));
+  }
 }

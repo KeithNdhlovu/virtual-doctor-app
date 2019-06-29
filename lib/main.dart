@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:heart_monitor/blocs/setup_bloc.dart';
 import 'package:heart_monitor/blocs/user_bloc.dart';
+import 'package:heart_monitor/partials/consultations.dart';
+import 'package:heart_monitor/partials/login.dart';
 import 'package:heart_monitor/partials/setup.dart';
 import 'package:heart_monitor/partials/sleep.dart';
 import 'package:provider/provider.dart';
@@ -14,7 +16,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        // ChangeNotifierProvider(builder: (_) => SetupBloc()),
         ChangeNotifierProvider(builder: (_) => UserBloc()),
       ],
       child: Consumer<UserBloc>(
@@ -24,7 +25,14 @@ class MyApp extends StatelessWidget {
               primaryColor: Color.fromRGBO(147, 1, 142, 1), 
               accentColor: Colors.deepPurpleAccent
             ),
-            home: Scaffold(body: HomePage()),
+            home: Scaffold(body: SetupPage()),
+            routes: <String, WidgetBuilder> {
+              '/home': (BuildContext context) => new HomePage(),
+              '/setup': (BuildContext context) => new SetupPage(),
+              '/login': (BuildContext context) => new LoginPage(),
+              '/blood-pressure': (BuildContext context) => new SleepPage(),
+              '/consultations': (BuildContext context) => new ConsultationsPage(),
+            },
           );
         },
       ),

@@ -48,8 +48,8 @@ class UserApiProvider {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setString("access_token", token);
 
-      // After saving the token, we can continue to get the user
-      this.getUser(host);
+      return this.getUser(host);
+      
     } catch (error) {
       
       print(error);
