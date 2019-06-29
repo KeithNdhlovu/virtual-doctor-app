@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:heart_monitor/blocs/user_bloc.dart';
+import 'package:provider/provider.dart';
+
+import 'loader.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key, this.title}) : super(key: key);
@@ -30,20 +34,10 @@ class _LoginPageState extends State<LoginPage> {
     });
   }
 
-  void _onPostLogin(BuildContext context) {
-    
-    // we need to do an API call to post our details
-    
-  }
-
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
+    
+    final _userBloc = Provider.of<UserBloc>(context);
 
     final emailField = TextField(
       style: style,
@@ -73,12 +67,11 @@ class _LoginPageState extends State<LoginPage> {
       child: MaterialButton(
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        onPressed: () {},
-        child: Text("Login",
-            textAlign: TextAlign.center,
+        onPressed: () => !_userBloc.loading ? _userBloc.postLogin(this._username, this._password) : null,
+        child: !_userBloc.loading ? Text("Login", textAlign: TextAlign.center,
             style: style.copyWith(
               color: Colors.white, fontWeight: FontWeight.bold),
-            ),
+            ) : CircularProgressIndicator(backgroundColor: Theme.of(context).accentColor)
       ),
     );
 
@@ -114,7 +107,16 @@ class _LoginPageState extends State<LoginPage> {
                   child: Padding(
                     padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
                     child: Column(children: <Widget>[
-                      SizedBox(height: 45.0), emailField,
+                      (_userBloc.error != "") ? Column(
+                        children: <Widget>[
+                          SizedBox(height: 25.0),
+                          Text(
+                            _userBloc.error.toString(),
+                            style: TextStyle(color: Colors.red),
+                          )
+                        ],
+                      ) : Text("lol"),
+                      SizedBox(height: 25.0), emailField,
                       SizedBox(height: 25.0), passwordField,
                       SizedBox(height: 35.0), loginButon,
                       SizedBox(height: 15.0),

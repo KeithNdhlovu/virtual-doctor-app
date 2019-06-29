@@ -7,4 +7,8 @@ class UserRepository{
   Future<UserResponse> getUser(String host){
     return _apiProvider.getUser(host);
   }
+  
+  Future postLogin(String host, String username, String password){
+    return _apiProvider.postLogin(host, username, password);
+  }
 }

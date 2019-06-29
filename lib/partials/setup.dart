@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:heart_monitor/blocs/setup_bloc.dart';
-import 'package:heart_monitor/partials/login.dart';
 import 'package:provider/provider.dart';
+import 'package:heart_monitor/partials/login.dart';
+import 'package:heart_monitor/blocs/user_bloc.dart';
+import 'package:heart_monitor/blocs/setup_bloc.dart';
 
 class SetupPage extends StatelessWidget {
   
@@ -13,11 +14,15 @@ class SetupPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final _setupBloc =  Provider.of<SetupBloc>(context);
+    // final _setupBloc =  Provider.of<SetupBloc>(context);
+    final _userBloc  =  Provider.of<UserBloc>(context);
 
     final _ipField = TextField(
       style: style,
-      onChanged: (String ip) => _setupBloc.ipAddress = ip,
+      onChanged: (String ip) {
+        _userBloc.ipAddress = ip;
+        _userBloc.host = "http://" + ip;
+      },
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
           hintText: "IP Address",
@@ -34,7 +39,7 @@ class SetupPage extends StatelessWidget {
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () {
 
-          if (_setupBloc.ipAddress.isEmpty) {
+          if (_userBloc.ipAddress.isEmpty) {
             final snackBar = SnackBar(content: Text("Please Enter IP Address to continue"));
             Scaffold.of(context).showSnackBar(snackBar);
             return;
@@ -46,7 +51,7 @@ class SetupPage extends StatelessWidget {
           );
           
         },
-        child: Text("Continues",
+        child: Text("Continue",
             textAlign: TextAlign.center,
             style: style.copyWith(
               color: Colors.white, fontWeight: FontWeight.bold),
