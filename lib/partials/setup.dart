@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:heart_monitor/partials/consultations.dart';
+import 'package:heart_monitor/services/response/user_response.dart';
 import 'package:provider/provider.dart';
 import 'package:heart_monitor/partials/login.dart';
 import 'package:heart_monitor/blocs/user_bloc.dart';
@@ -10,6 +12,27 @@ class SetupPage extends StatelessWidget {
     fontFamily: 'Montserrat', 
     fontSize: 20.0
   );
+
+  _fetchSessionAndNavigate(UserBloc _userBloc, BuildContext context) async {
+    // Has the user alredy loged in, then we need to show them the list of consultations
+    final user = await _userBloc.user;
+
+    if (user is UserResponse) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => ConsultationsPage(title: "Consultations"))
+      );
+      return;
+    }
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => LoginPage(title: "Login"))
+    );
+
+    // Navigator.of(context)
+    //   .pushReplacementNamed("/login");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,14 +68,8 @@ class SetupPage extends StatelessWidget {
             return;
           }
 
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => LoginPage(title: "Login"))
-          );
+          this._fetchSessionAndNavigate(_userBloc, context);
 
-          // Navigator.of(context)
-          //   .pushReplacementNamed("/login");
-          
         },
         child: Text("Continue",
             textAlign: TextAlign.center,

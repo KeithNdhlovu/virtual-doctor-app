@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:heart_monitor/blocs/user_bloc.dart';
 import 'package:heart_monitor/models/consultation.dart';
+import 'package:heart_monitor/partials/sleep.dart';
 import 'package:heart_monitor/services/response/consultation_response.dart';
 import 'package:provider/provider.dart';
 
@@ -26,16 +27,20 @@ class _ConsultationsPageState extends State<ConsultationsPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Consultation')
+        title: Text('Consultations')
       ),
       body: FutureBuilder<ConsultationResponse>(
         future: _userBloc.getConsultations(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return _buildConsultations(snapshot.data.consultations);
-          } else if (snapshot.hasError) {
+          }
+          
+          if (snapshot.hasError) {
             return Text("${snapshot.error}");
           }
+
+          return Text("Loading ...");
         },
       )
     );
@@ -53,6 +58,11 @@ class _ConsultationsPageState extends State<ConsultationsPage> {
 
         final int index = i ~/ 2;
 
+        if (index >= _consultations.length) {
+          // ...then generate 10 more and add them to the 
+          return null;
+        }
+
         return _buildRow(_consultations[index]);
       }
     );
@@ -60,6 +70,7 @@ class _ConsultationsPageState extends State<ConsultationsPage> {
 
   Widget _buildRow(Consultation consulation) {
     return ListTile(
+      onTap: () =>  _handleOnItemClick(consulation),
       title: Text(
         consulation.notes,
         style: const TextStyle(fontSize: 18),
@@ -67,4 +78,13 @@ class _ConsultationsPageState extends State<ConsultationsPage> {
     );
   }
 
+  _handleOnItemClick(Consultation consulation) {
+
+    // we need to navigate to the heart rate calulator page
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => SleepPage())
+    );
+    print("${consulation.notes}");
+  }
 }

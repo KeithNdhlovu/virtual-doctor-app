@@ -7,17 +7,25 @@ class ConsultationResponse {
 
   ConsultationResponse({this.consultations, this.error});
 
-  factory ConsultationResponse.fromJson(Map<String, dynamic> json) {
-    return ConsultationResponse(
-      consultations: (json["data"] as List).map( (c) => new Consultation.fromJson(c)),
-      error: null
-    );
-  }
+ConsultationResponse.fromJson(Map<String, dynamic> json)
+      : consultations = (json["consultations"] as List).map((i) => new Consultation.fromJson(i)).toList(),
+        error = "";
 
-  factory ConsultationResponse.withError(String errorValue) {
-    return ConsultationResponse(
-      consultations: new List(),
-      error: errorValue
-    );
-  }
+  ConsultationResponse.withError(String errorValue)
+      : consultations = List(),
+        error = errorValue;
+
+  // factory ConsultationResponse.fromJson(Map<String, dynamic> json) {
+  //   return ConsultationResponse(
+  //     consultations: (json["consultations"] as List).map( (c) => new Consultation.fromJson(c)).toList(),
+  //     error: null
+  //   );
+  // }
+
+  // factory ConsultationResponse.withError(String errorValue) {
+  //   return ConsultationResponse(
+  //     consultations: new List(),
+  //     error: errorValue
+  //   );
+  // }
 }
