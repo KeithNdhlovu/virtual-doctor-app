@@ -74,7 +74,7 @@ class _LoginPageState extends State<LoginPage> {
         child: !_userBloc.loading ? Text("Login", textAlign: TextAlign.center,
             style: style.copyWith(
               color: Colors.white, fontWeight: FontWeight.bold),
-            ) : CircularProgressIndicator(backgroundColor: Theme.of(context).accentColor)
+            ) : Text("Loading ...")
       ),
     );
 

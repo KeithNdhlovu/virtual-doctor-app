@@ -21,9 +21,15 @@ class MyApp extends StatelessWidget {
       child: Consumer<UserBloc>(
         builder: (context, counter, _) {
           return MaterialApp(
+            title: 'Virtual Doctor',
             theme: new ThemeData(
               primaryColor: Color.fromRGBO(147, 1, 142, 1), 
-              accentColor: Colors.deepPurpleAccent
+              accentColor: Colors.deepPurpleAccent,
+              textTheme: TextTheme(
+                    title: TextStyle(fontSize: 30, color: Colors.white),
+                    subtitle: TextStyle(fontSize: 20, color: Colors.white),
+                    body1: TextStyle(fontSize: 15, color: Colors.white),
+              )
             ),
             home: Scaffold(body: SetupPage()),
             routes: <String, WidgetBuilder> {

@@ -35,7 +35,7 @@ class _ConsultationsPageState extends State<ConsultationsPage> {
           if (snapshot.hasData) {
             return _buildConsultations(snapshot.data.consultations);
           }
-          
+
           if (snapshot.hasError) {
             return Text("${snapshot.error}");
           }

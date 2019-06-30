@@ -17,7 +17,7 @@ class SetupPage extends StatelessWidget {
     // Has the user alredy loged in, then we need to show them the list of consultations
     final user = await _userBloc.user;
 
-    if (user is UserResponse) {
+    if (user is UserResponse && user.user != null) {
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => ConsultationsPage(title: "Consultations"))
