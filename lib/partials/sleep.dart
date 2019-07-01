@@ -69,27 +69,44 @@ class _SleepPageState extends State<SleepPage> {
           ),
         ),
         Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-          _formatBedTime('IN THE', inBedTime),
-          _formatBedTime('OUT OF', outBedTime),
+          _formatBedTime('Systolic', inBedTime),
+          _formatBedTime('Diastolic', outBedTime),
         ]),
         FlatButton(
-          child: Text('S H U F F L E'),
-          color: baseColor,
-          textColor: Colors.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(50.0),
+          child: Image.asset(
+            "images/thumb-print.png",
+            fit: BoxFit.contain, 
+            width: 90,
+            height: 90,
           ),
-          onPressed: _shuffle,
-        )
+          onPressed: _generateRandomBloodPressure,
+        ),
+        _showOrHideContinueButton(true)
       ],
     ));
+  }
+
+  Widget _showOrHideContinueButton(bool isLoading) {
+    
+    if (isLoading) {
+      return CircularProgressIndicator();
+    }
+    
+    return FlatButton(
+      child: Text('Continue'),
+      color: baseColor,
+      textColor: Colors.white,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(50.0),
+      ),
+      onPressed: _shuffle,
+    );
   }
 
   Widget _formatBedTime(String pre, int time) {
     return Column(
       children: [
         Text(pre, style: TextStyle(color: baseColor)),
-        Text('BED AT', style: TextStyle(color: baseColor)),
         Text(
           '${_formatTime(time)}',
           style: TextStyle(color: Colors.white),
@@ -97,7 +114,7 @@ class _SleepPageState extends State<SleepPage> {
       ],
     );
   }
-
+  
   String _formatTime(int time) {
     if (time == 0 || time == null) {
       return '00:00';
@@ -115,6 +132,12 @@ class _SleepPageState extends State<SleepPage> {
   }
 
   int _generateRandomTime() => Random().nextInt(288);
+
+
+  void _generateRandomBloodPressure() {
+
+  }
+
 
   Widget _sleepPage(Column column) {
     return Scaffold(
