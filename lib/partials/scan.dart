@@ -14,7 +14,7 @@ class ScanPage extends StatefulWidget {
 class _ScanPageState extends State<ScanPage> {
   final baseColor = Color.fromRGBO(255, 255, 255, 0.3);
 
-  String initText = 'Place you thumb on fingerprint section';
+  String initText = 'Place your thumb on fingerprint section';
   String statusText = "";
 
   int _counter = 30;
