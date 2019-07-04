@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:heart_monitor/blocs/user_bloc.dart';
 import 'package:heart_monitor/models/consultation.dart';
+import 'package:heart_monitor/partials/scan.dart';
 import 'package:heart_monitor/partials/sleep.dart';
 import 'package:heart_monitor/services/response/consultation_response.dart';
 import 'package:provider/provider.dart';
@@ -83,7 +84,7 @@ class _ConsultationsPageState extends State<ConsultationsPage> {
     // we need to navigate to the heart rate calulator page
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => SleepPage())
+      MaterialPageRoute(builder: (context) => ScanPage())
     );
     print("${consulation.notes}");
   }

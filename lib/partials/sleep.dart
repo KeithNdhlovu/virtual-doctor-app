@@ -1,8 +1,13 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:heart_monitor/models/consultation.dart';
 import 'package:flutter_circular_slider/flutter_circular_slider.dart';
 
 class SleepPage extends StatefulWidget {
+  
+  SleepPage({Key key, this.consultation}) : super(key: key);
+  final Consultation consultation;
+
   @override
   _SleepPageState createState() => _SleepPageState();
 }
@@ -15,29 +20,93 @@ class _SleepPageState extends State<SleepPage> {
 
   int systolic;
   int diastolic;
+  
+  int bracket;
+  String label;
 
-  String initText = 'Place you thumb on fingerprint section';
-  String statusText = "";
-
+  String statusText = 'Here are your readings';
+  List<int> brackets = [0, 1, 2, 3, 4];
+  List<String> bLabels = ["Low", "Normal", "Pre Hypertension", "High: Stage 1 Hypertension", "High: Stage 2 Hypertension"];
+  
   @override
   void initState() {
     super.initState();
-    _shuffle();
     _initialStatus();
+    _generateBPForBrancket(_generateBetween(0, 4));
   }
 
   void _initialStatus() {
     setState(() {
-      statusText = initText;
+      statusText = 'Here are your readings';
     });
   }
 
-  void _shuffle() {
+  void _generateBPForBrancket(int _bracket) {
+
+    switch (_bracket) {
+      case 0: {
+        _generateLowBP();
+        break;
+      }
+      case 1: {
+        _generateNormalBP();
+        break;
+      }
+      case 2: {
+        _generatePreHighBP();
+        break;
+      }
+      case 3: {
+        _generateStageOneHighBP();
+        break;
+      }
+      case 4: {
+        _generateStageTwoHighBP();
+        break;
+      }
+      default: {
+        _generateLowBP();
+      }
+    }
+  }
+
+  void _generateLowBP() {
     setState(() {
-      initSystolic = _generateRandomTime();
-      initDiastolic = _generateRandomTime();
-      systolic = initSystolic;
-      diastolic = initDiastolic;
+      label = bLabels[0];
+      systolic = _generateRandomSystolic(70, 90);
+      diastolic = _generateRandomDiastolic(40, 60);
+    });
+  }
+
+  void _generateNormalBP() {
+    setState(() {
+      label = bLabels[1];
+      systolic = _generateRandomSystolic(90, 120);
+      diastolic = _generateRandomDiastolic(60, 80);
+    });
+  }
+
+  void _generatePreHighBP() {
+    setState(() {
+      label = bLabels[2];
+      systolic = _generateRandomSystolic(120, 140);
+      diastolic = _generateRandomDiastolic(80, 90);
+    });
+  }
+
+  void _generateStageOneHighBP() {
+    setState(() {
+      label = bLabels[3];
+      systolic = _generateRandomSystolic(140, 160);
+      diastolic = _generateRandomDiastolic(90, 100);
+    });
+  }
+
+  void _generateStageTwoHighBP() {
+    setState(() {
+      label = bLabels[4];
+      systolic = _generateRandomSystolic(160, 190);
+      diastolic = _generateRandomDiastolic(100, 120);
     });
   }
 
@@ -53,25 +122,12 @@ class _SleepPageState extends State<SleepPage> {
     return _sleepPage(Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        Text(
-          statusText,
-          style: TextStyle(color: Colors.white),
-        ),
+        _formatStatus("Status", label),
         _circleSlider(),
         Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-          _formatBedTime('Systolic', systolic),
-          _formatBedTime('Diastolic', diastolic),
-        ]),
-        FlatButton(
-          child: Image.asset(
-            "images/thumb-print.png",
-            fit: BoxFit.contain, 
-            width: 90,
-            height: 90,
-          ),
-          onPressed: _generateRandomBloodPressure,
-        ),
-        _showOrHideContinueButton(false),
+          _formatSystolic('Systolic', systolic),
+          _formatDiastolic('Diastolic', diastolic),
+        ])
       ],
     ));
   }
@@ -79,8 +135,8 @@ class _SleepPageState extends State<SleepPage> {
   Widget _circleSlider() {
     DoubleCircularSlider slider = DoubleCircularSlider(
       288,
-      initSystolic,
-      initDiastolic,
+      diastolic,
+      systolic,
       height: 260.0,
       width: 260.0,
       primarySectors: 6,
@@ -95,77 +151,78 @@ class _SleepPageState extends State<SleepPage> {
         padding: const EdgeInsets.all(42.0),
         child: Center(
             child: Text('${_formatIntervalTime(systolic, diastolic)}',
-                style: TextStyle(fontSize: 36.0, color: Colors.white))),
+                style: TextStyle(fontSize: 20.0, color: Colors.white))),
       ),
     );
 
     return slider;
   }
 
-  Widget _showOrHideContinueButton(bool isLoading) {
-    
-    if (isLoading) {
-      return CircularProgressIndicator();
-    }
-    
-    return FlatButton(
-      child: Text('Continue'),
-      color: baseColor,
-      textColor: Colors.white,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(50.0),
-      ),
-      onPressed: _shuffle,
-    );
-  }
-
-  Widget _formatBedTime(String pre, int time) {
+  Widget _formatSystolic(String pre, int value) {
     return Column(
       children: [
-        Text(pre, style: TextStyle(color: baseColor)),
+        Text(pre, style: TextStyle(fontSize: 20.0, color: baseColor)),
         Text(
-          '${_formatTime(time)}',
-          style: TextStyle(color: Colors.white),
+          '${value}',
+          style: TextStyle(fontSize: 20.0, color: Colors.white),
         )
       ],
     );
   }
-  
-  String _formatTime(int time) {
-    if (time == 0 || time == null) {
-      return '00:00';
-    }
-    var hours = time ~/ 12;
-    var minutes = (time % 12) * 5;
-    return '$hours:$minutes';
+
+  Widget _formatStatus(String pre, String value) {
+    return Column(
+      children: [
+        Text(pre, style: TextStyle(fontSize: 20.0, color: baseColor)),
+        Text(
+          '${value}',
+          style: TextStyle(fontSize: 20.0, color: Colors.white),
+        )
+      ],
+    );
   }
 
-  String _formatIntervalTime(int init, int end) {
-    var sleepTime = end > init ? end - init : 288 - init + end;
-    var hours = sleepTime ~/ 12;
-    var minutes = (sleepTime % 12) * 5;
-    return '${hours}h${minutes}m';
+  Widget _formatDiastolic(String pre, int value) {
+    return Column(
+      children: [
+        Text(pre, style: TextStyle(fontSize: 20.0, color: baseColor)),
+        Text(
+          '${value}',
+          style: TextStyle(fontSize: 20.0, color: Colors.white),
+        )
+      ],
+    );
   }
 
-  int _generateRandomTime() => Random().nextInt(288);
+  String _formatIntervalTime(int systo, int diasto) {
+    return '${systo}/${diasto} mmHg';
+  }
 
+  int _generateRandomSystolic(int min, int max) => min + Random().nextInt(max - min);
+  int _generateRandomDiastolic(int min, int max) => min + Random().nextInt(max - min);
+  int _generateBetween(int min, int max) => min + Random().nextInt(max - min);
 
   void _generateRandomBloodPressure() {
-    _shuffle();
+    
   }
 
 
   Widget _sleepPage(Column column) {
     return Scaffold(
-      body: SafeArea(
-      child: Container(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('images/background_morning.png'),
-              fit: BoxFit.cover,
+      body: AbsorbPointer(
+        absorbing: true,
+        child: SafeArea(
+          child: Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('images/background_morning.png'),
+                fit: BoxFit.cover,
+              ),
             ),
+            child: column
           ),
-          child: column),
-    ));
+        )
+      )
+    );
   }
 }
