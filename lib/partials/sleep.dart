@@ -10,31 +10,41 @@ class SleepPage extends StatefulWidget {
 class _SleepPageState extends State<SleepPage> {
   final baseColor = Color.fromRGBO(255, 255, 255, 0.3);
 
-  int initTime;
-  int endTime;
+  int initSystolic;
+  int initDiastolic;
 
-  int inBedTime;
-  int outBedTime;
+  int systolic;
+  int diastolic;
+
+  String initText = 'Place you thumb on fingerprint section';
+  String statusText = "";
 
   @override
   void initState() {
     super.initState();
     _shuffle();
+    _initialStatus();
+  }
+
+  void _initialStatus() {
+    setState(() {
+      statusText = initText;
+    });
   }
 
   void _shuffle() {
     setState(() {
-      initTime = _generateRandomTime();
-      endTime = _generateRandomTime();
-      inBedTime = initTime;
-      outBedTime = endTime;
+      initSystolic = _generateRandomTime();
+      initDiastolic = _generateRandomTime();
+      systolic = initSystolic;
+      diastolic = initDiastolic;
     });
   }
 
   void _updateLabels(int init, int end, int x) {
     setState(() {
-      inBedTime = init;
-      outBedTime = end;
+      systolic = init;
+      diastolic = end;
     });
   }
 
@@ -44,33 +54,13 @@ class _SleepPageState extends State<SleepPage> {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         Text(
-          'How long did you stay in bed?',
+          statusText,
           style: TextStyle(color: Colors.white),
         ),
-        DoubleCircularSlider(
-          288,
-          initTime,
-          endTime,
-          height: 260.0,
-          width: 260.0,
-          primarySectors: 6,
-          secondarySectors: 24,
-          baseColor: Color.fromRGBO(255, 255, 255, 0.1),
-          selectionColor: baseColor,
-          handlerColor: Colors.white,
-          handlerOutterRadius: 12.0,
-          onSelectionChange: _updateLabels,
-          sliderStrokeWidth: 12.0,
-          child: Padding(
-            padding: const EdgeInsets.all(42.0),
-            child: Center(
-                child: Text('${_formatIntervalTime(inBedTime, outBedTime)}',
-                    style: TextStyle(fontSize: 36.0, color: Colors.white))),
-          ),
-        ),
+        _circleSlider(),
         Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-          _formatBedTime('Systolic', inBedTime),
-          _formatBedTime('Diastolic', outBedTime),
+          _formatBedTime('Systolic', systolic),
+          _formatBedTime('Diastolic', diastolic),
         ]),
         FlatButton(
           child: Image.asset(
@@ -81,9 +71,35 @@ class _SleepPageState extends State<SleepPage> {
           ),
           onPressed: _generateRandomBloodPressure,
         ),
-        _showOrHideContinueButton(true)
+        _showOrHideContinueButton(false),
       ],
     ));
+  }
+
+  Widget _circleSlider() {
+    DoubleCircularSlider slider = DoubleCircularSlider(
+      288,
+      initSystolic,
+      initDiastolic,
+      height: 260.0,
+      width: 260.0,
+      primarySectors: 6,
+      secondarySectors: 24,
+      baseColor: Color.fromRGBO(255, 255, 255, 0.1),
+      selectionColor: baseColor,
+      handlerColor: Colors.white,
+      handlerOutterRadius: 12.0,
+      onSelectionChange: _updateLabels,
+      sliderStrokeWidth: 12.0,
+      child: Padding(
+        padding: const EdgeInsets.all(42.0),
+        child: Center(
+            child: Text('${_formatIntervalTime(systolic, diastolic)}',
+                style: TextStyle(fontSize: 36.0, color: Colors.white))),
+      ),
+    );
+
+    return slider;
   }
 
   Widget _showOrHideContinueButton(bool isLoading) {
@@ -135,7 +151,7 @@ class _SleepPageState extends State<SleepPage> {
 
 
   void _generateRandomBloodPressure() {
-
+    _shuffle();
   }
 
 
