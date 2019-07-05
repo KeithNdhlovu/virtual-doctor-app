@@ -1,12 +1,14 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:heart_monitor/blocs/user_bloc.dart';
 import 'package:heart_monitor/models/consultation.dart';
 import 'package:flutter_circular_slider/flutter_circular_slider.dart';
 
 class BloodPressurePage extends StatefulWidget {
   
-  BloodPressurePage({Key key, this.consultation}) : super(key: key);
+  BloodPressurePage({Key key, this.consultation, this.userBloc}) : super(key: key);
   final Consultation consultation;
+  final UserBloc userBloc;
 
   @override
   _BloodPressurePageState createState() => _BloodPressurePageState();
@@ -76,6 +78,8 @@ class _BloodPressurePageState extends State<BloodPressurePage> {
       systolic = _generateRandomSystolic(70, 90);
       diastolic = _generateRandomDiastolic(40, 60);
     });
+
+    _postBloodPressureResults();
   }
 
   void _generateNormalBP() {
@@ -84,6 +88,8 @@ class _BloodPressurePageState extends State<BloodPressurePage> {
       systolic = _generateRandomSystolic(90, 120);
       diastolic = _generateRandomDiastolic(60, 80);
     });
+
+    _postBloodPressureResults();
   }
 
   void _generatePreHighBP() {
@@ -92,6 +98,8 @@ class _BloodPressurePageState extends State<BloodPressurePage> {
       systolic = _generateRandomSystolic(120, 140);
       diastolic = _generateRandomDiastolic(80, 90);
     });
+
+    _postBloodPressureResults();
   }
 
   void _generateStageOneHighBP() {
@@ -100,6 +108,8 @@ class _BloodPressurePageState extends State<BloodPressurePage> {
       systolic = _generateRandomSystolic(140, 160);
       diastolic = _generateRandomDiastolic(90, 100);
     });
+
+    _postBloodPressureResults();
   }
 
   void _generateStageTwoHighBP() {
@@ -108,6 +118,8 @@ class _BloodPressurePageState extends State<BloodPressurePage> {
       systolic = _generateRandomSystolic(160, 190);
       diastolic = _generateRandomDiastolic(100, 120);
     });
+
+    _postBloodPressureResults();
   }
 
   void _updateLabels(int init, int end, int x) {
@@ -150,7 +162,7 @@ class _BloodPressurePageState extends State<BloodPressurePage> {
       child: Padding(
         padding: const EdgeInsets.all(42.0),
         child: Center(
-            child: Text('${_formatIntervalTime(systolic, diastolic)}',
+            child: Text('${_formatFinanlBP(systolic, diastolic)}',
                 style: TextStyle(fontSize: 20.0, color: Colors.white))),
       ),
     );
@@ -194,7 +206,7 @@ class _BloodPressurePageState extends State<BloodPressurePage> {
     );
   }
 
-  String _formatIntervalTime(int systo, int diasto) {
+  String _formatFinanlBP(int systo, int diasto) {
     return '${systo}/${diasto} mmHg';
   }
 
@@ -202,8 +214,10 @@ class _BloodPressurePageState extends State<BloodPressurePage> {
   int _generateRandomDiastolic(int min, int max) => min + Random().nextInt(max - min);
   int _generateBetween(int min, int max) => min + Random().nextInt(max - min);
 
-  void _generateRandomBloodPressure() {
-    
+  void _postBloodPressureResults() {
+    String readings = _formatFinanlBP(systolic, diastolic);
+    int consultationID = widget.consultation.id;
+    widget.userBloc.postBloodPressure(readings, consultationID);
   }
 
 

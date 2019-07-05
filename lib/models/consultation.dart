@@ -6,16 +6,18 @@ class Consultation {
   final User doctor;
   final User patient;
   final int status;
+  final int id;
 
+  static const TYPE_PAID  = 6;
   static const TYPE_WAITING   = 1;
   static const TYPE_APPROVED  = 2;
   static const TYPE_FINISHED  = 3;
   static const TYPE_CANCELLED = 4;
   static const TYPE_AWAITING_PAYMENT  = 5;
-  static const TYPE_PAID  = 6;
   static const TYPE_PAID_MEDICAL_AID  = 7;
 
   Consultation({
+    this.id, 
     this.notes, 
     this.status, 
     this.doctor, 
@@ -25,6 +27,7 @@ class Consultation {
 
   factory Consultation.fromJson(Map<String, dynamic> json) {
     return Consultation(
+      id: json["id"],
       notes: json["notes"],
       status: json["status"],
       doctorNotes: json["doctor_notes"],

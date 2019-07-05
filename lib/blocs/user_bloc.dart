@@ -82,6 +82,21 @@ class UserBloc with ChangeNotifier {
 
   }
 
+  postBloodPressure(String readings, int consultationID ) async {
+    loading = true;
+
+    Map response = await _repository.postBloodPressure(this.host, readings, consultationID);
+    loading = false;
+    error = (response["error"] != null) ? response["error"] : "";
+
+    // on success we just update the UI accordingly
+    if (response["success"]) {
+      // Clear the errors
+      error = "";
+    }
+
+  }
+
   getConsultations() {
     return  _cRepository.getConsultations(this.host);
   }

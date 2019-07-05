@@ -11,4 +11,8 @@ class UserRepository{
   Future postLogin(String host, String username, String password){
     return _apiProvider.postLogin(host, username, password);
   }
+  
+  Future postBloodPressure(String host, String readings, int consultationID){
+    return _apiProvider.postBloodPressure(host, readings, consultationID);
+  }
 }

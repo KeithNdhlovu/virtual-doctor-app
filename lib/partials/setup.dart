@@ -6,16 +6,23 @@ import 'package:heart_monitor/partials/login.dart';
 import 'package:heart_monitor/blocs/user_bloc.dart';
 import 'package:heart_monitor/blocs/setup_bloc.dart';
 
-class SetupPage extends StatelessWidget {
-  
+class SetupPage extends StatefulWidget {
+  SetupPage({Key key, this.userBloc}) : super(key: key);
+  final UserBloc userBloc;
+
+  _SetupPageState createState() => _SetupPageState();
+}
+
+class _SetupPageState extends State<SetupPage> {
+
   final TextStyle style = TextStyle(
     fontFamily: 'Montserrat', 
     fontSize: 20.0
   );
 
-  _fetchSessionAndNavigate(UserBloc _userBloc, BuildContext context) async {
+  _fetchSessionAndNavigate(BuildContext context) async {
     // Has the user alredy loged in, then we need to show them the list of consultations
-    final user = await _userBloc.user;
+    final user = await widget.userBloc.user;
 
     if (user is UserResponse && user.user != null) {
       Navigator.push(
@@ -37,14 +44,11 @@ class SetupPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    // final _setupBloc =  Provider.of<SetupBloc>(context);
-    final _userBloc  =  Provider.of<UserBloc>(context);
-
     final _ipField = TextField(
       style: style,
       onChanged: (String ip) {
-        _userBloc.ipAddress = ip;
-        _userBloc.host = "http://" + ip;
+        widget.userBloc.ipAddress = ip;
+        widget.userBloc.host = "http://" + ip;
       },
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
@@ -62,13 +66,13 @@ class SetupPage extends StatelessWidget {
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () {
 
-          if (_userBloc.ipAddress.isEmpty) {
+          if (widget.userBloc.ipAddress.isEmpty) {
             final snackBar = SnackBar(content: Text("Please Enter IP Address to continue"));
             Scaffold.of(context).showSnackBar(snackBar);
             return;
           }
 
-          this._fetchSessionAndNavigate(_userBloc, context);
+          this._fetchSessionAndNavigate(context);
 
         },
         child: Text("Continue",
