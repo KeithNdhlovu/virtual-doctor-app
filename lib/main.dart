@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:heart_monitor/blocs/setup_bloc.dart';
 import 'package:heart_monitor/blocs/user_bloc.dart';
 import 'package:heart_monitor/partials/blood_pressure.dart';
 import 'package:heart_monitor/partials/consultations.dart';
