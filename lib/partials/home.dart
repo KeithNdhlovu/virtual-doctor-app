@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:heart_monitor/blocs/user_bloc.dart';
 import 'package:heart_monitor/partials/consultations.dart';
-import 'package:heart_monitor/partials/login.dart';
-import 'package:heart_monitor/partials/setup.dart';
-import 'package:heart_monitor/partials/sleep.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
@@ -15,8 +12,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  
-  UserBloc userBloc;
+
   Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   SharedPreferences _sharedPreferences;
 

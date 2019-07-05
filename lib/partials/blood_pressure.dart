@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:heart_monitor/models/consultation.dart';
 import 'package:flutter_circular_slider/flutter_circular_slider.dart';
 
-class SleepPage extends StatefulWidget {
+class BloodPressurePage extends StatefulWidget {
   
-  SleepPage({Key key, this.consultation}) : super(key: key);
+  BloodPressurePage({Key key, this.consultation}) : super(key: key);
   final Consultation consultation;
 
   @override
-  _SleepPageState createState() => _SleepPageState();
+  _BloodPressurePageState createState() => _BloodPressurePageState();
 }
 
-class _SleepPageState extends State<SleepPage> {
+class _BloodPressurePageState extends State<BloodPressurePage> {
   final baseColor = Color.fromRGBO(255, 255, 255, 0.3);
 
   int initSystolic;
@@ -119,7 +119,7 @@ class _SleepPageState extends State<SleepPage> {
 
   @override
   Widget build(BuildContext context) {
-    return _sleepPage(Column(
+    return _mainnPage(Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         _formatStatus("Status", label),
@@ -207,7 +207,7 @@ class _SleepPageState extends State<SleepPage> {
   }
 
 
-  Widget _sleepPage(Column column) {
+  Widget _mainnPage(Column column) {
     return Scaffold(
       body: AbsorbPointer(
         absorbing: true,

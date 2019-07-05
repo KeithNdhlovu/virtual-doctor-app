@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:heart_monitor/blocs/setup_bloc.dart';
 import 'package:heart_monitor/blocs/user_bloc.dart';
+import 'package:heart_monitor/partials/blood_pressure.dart';
 import 'package:heart_monitor/partials/consultations.dart';
 import 'package:heart_monitor/partials/login.dart';
 import 'package:heart_monitor/partials/setup.dart';
-import 'package:heart_monitor/partials/sleep.dart';
 import 'package:provider/provider.dart';
 
 import 'partials/home.dart';
@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(builder: (_) => UserBloc()),
       ],
       child: Consumer<UserBloc>(
-        builder: (context, counter, _) {
+        builder: (context, user, _) {
           return MaterialApp(
             title: 'Virtual Doctor',
             theme: new ThemeData(
@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
               '/home': (BuildContext context) => new HomePage(),
               '/setup': (BuildContext context) => new SetupPage(),
               '/login': (BuildContext context) => new LoginPage(),
-              '/blood-pressure': (BuildContext context) => new SleepPage(),
+              '/blood-pressure': (BuildContext context) => new BloodPressurePage(),
               '/consultations': (BuildContext context) => new ConsultationsPage(),
             },
           );

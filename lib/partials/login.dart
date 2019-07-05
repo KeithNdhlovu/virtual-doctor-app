@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:heart_monitor/blocs/user_bloc.dart';
 import 'package:provider/provider.dart';
 
-import 'loader.dart';
-
 class LoginPage extends StatefulWidget {
   LoginPage({Key key, this.title}) : super(key: key);
 
@@ -71,10 +69,9 @@ class _LoginPageState extends State<LoginPage> {
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () => !_userBloc.loading ? _userBloc.postLogin(this._username, this._password) : null,
-        child: !_userBloc.loading ? Text("Login", textAlign: TextAlign.center,
-            style: style.copyWith(
-              color: Colors.white, fontWeight: FontWeight.bold),
-            ) : Text("Loading ...")
+        child: !_userBloc.loading ? 
+          Text("Login", textAlign: TextAlign.center, style: style.copyWith(color: Colors.white, fontWeight: FontWeight.bold)) : 
+          Text("Loading ...", style: style.copyWith(color: Colors.white, fontWeight: FontWeight.bold))
       ),
     );
 

@@ -24,7 +24,7 @@ class SetupPage extends StatelessWidget {
       );
       return;
     }
-
+    
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => LoginPage(title: "Login"))

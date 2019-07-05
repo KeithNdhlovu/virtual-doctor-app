@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:heart_monitor/models/consultation.dart';
-import 'package:heart_monitor/partials/sleep.dart';
+import 'package:heart_monitor/partials/blood_pressure.dart';
 
 class ScanPage extends StatefulWidget {
   ScanPage({Key key, this.consultation}) : super(key: key);
@@ -45,7 +45,7 @@ class _ScanPageState extends State<ScanPage> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => SleepPage(consultation: widget.consultation)
+            builder: (context) => BloodPressurePage(consultation: widget.consultation)
           )
         );
         break;
