@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:heart_monitor/models/consultation.dart';
+import 'package:heart_monitor/partials/home.dart';
 import 'package:heart_monitor/repository/consultation_repository.dart';
 import 'package:heart_monitor/repository/user_repository.dart';
 import 'package:heart_monitor/services/response/consultation_response.dart';
@@ -76,8 +77,11 @@ class UserBloc with ChangeNotifier {
       // Clear the errors
       error = "";
       
-      Navigator.of(this.context)
-          .pushReplacementNamed("/home");
+      Navigator.push(
+        this.context,
+        MaterialPageRoute(builder: (context) => HomePage(userBloc: this))
+      );
+
     }
 
   }
@@ -88,12 +92,6 @@ class UserBloc with ChangeNotifier {
     Map response = await _repository.postBloodPressure(this.host, readings, consultationID);
     loading = false;
     error = (response["error"] != null) ? response["error"] : "";
-
-    // on success we just update the UI accordingly
-    if (response["success"]) {
-      // Clear the errors
-      error = "";
-    }
 
   }
 

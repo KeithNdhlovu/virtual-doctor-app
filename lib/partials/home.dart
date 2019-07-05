@@ -7,6 +7,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 // The Home page should be responsible for showing the login page, if the user is not logged in
 // and should also show the respective content page once the user is successfully logged in
 class HomePage extends StatefulWidget {
+
+  HomePage({Key key, this.userBloc}) : super(key: key);
+  final UserBloc userBloc;
+
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -26,7 +30,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
 
     // does the user have an access token stored somewhere?
-    return ConsultationsPage();
+    return ConsultationsPage(userBloc: widget.userBloc);
   }
 
   _fetchSessionAndNavigate() async {

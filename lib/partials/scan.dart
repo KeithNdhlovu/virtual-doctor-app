@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:heart_monitor/blocs/user_bloc.dart';
 import 'package:heart_monitor/models/consultation.dart';
 import 'package:heart_monitor/partials/blood_pressure.dart';
 
 class ScanPage extends StatefulWidget {
-  ScanPage({Key key, this.consultation}) : super(key: key);
+  ScanPage({Key key, this.consultation, this.userBloc}) : super(key: key);
 
   final Consultation consultation;
+  final UserBloc userBloc;
 
   @override
   _ScanPageState createState() => _ScanPageState();
@@ -17,7 +19,7 @@ class _ScanPageState extends State<ScanPage> {
   String initText = 'Place your thumb on fingerprint section';
   String statusText = "";
 
-  int _counter = 30;
+  int _counter = 5;
 
   bool _buttonPressed = false;
   bool _loopActive = false;
@@ -45,7 +47,7 @@ class _ScanPageState extends State<ScanPage> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => BloodPressurePage(consultation: widget.consultation)
+            builder: (context) => BloodPressurePage(consultation: widget.consultation, userBloc: widget.userBloc)
           )
         );
         break;

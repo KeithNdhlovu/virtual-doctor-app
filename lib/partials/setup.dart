@@ -27,14 +27,14 @@ class _SetupPageState extends State<SetupPage> {
     if (user is UserResponse && user.user != null) {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => ConsultationsPage(title: "Consultations"))
+        MaterialPageRoute(builder: (context) => ConsultationsPage(title: "Consultations", userBloc: widget.userBloc))
       );
       return;
     }
     
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => LoginPage(title: "Login"))
+      MaterialPageRoute(builder: (context) => LoginPage(title: "Login", userBloc: widget.userBloc))
     );
 
     // Navigator.of(context)

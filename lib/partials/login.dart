@@ -3,9 +3,10 @@ import 'package:heart_monitor/blocs/user_bloc.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
-  LoginPage({Key key, this.title}) : super(key: key);
+  LoginPage({Key key, this.title, this.userBloc}) : super(key: key);
 
   final String title;
+  final UserBloc userBloc;
 
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -34,8 +35,6 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    
-    final _userBloc = Provider.of<UserBloc>(context);
 
     final emailField = TextField(
       style: style,
@@ -48,7 +47,7 @@ class _LoginPageState extends State<LoginPage> {
     );
 
     // Update the build context of the user bloc
-    _userBloc.context = context;
+    widget.userBloc.context = context;
 
     final passwordField = TextField(
       obscureText: true,
@@ -68,8 +67,8 @@ class _LoginPageState extends State<LoginPage> {
       child: MaterialButton(
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        onPressed: () => !_userBloc.loading ? _userBloc.postLogin(this._username, this._password) : null,
-        child: !_userBloc.loading ? 
+        onPressed: () => !widget.userBloc.loading ? widget.userBloc.postLogin(this._username, this._password) : null,
+        child: !widget.userBloc.loading ? 
           Text("Login", textAlign: TextAlign.center, style: style.copyWith(color: Colors.white, fontWeight: FontWeight.bold)) : 
           Text("Loading ...", style: style.copyWith(color: Colors.white, fontWeight: FontWeight.bold))
       ),
@@ -107,11 +106,11 @@ class _LoginPageState extends State<LoginPage> {
                   child: Padding(
                     padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
                     child: Column(children: <Widget>[
-                      (_userBloc.error != "") ? Column(
+                      (widget.userBloc.error != "") ? Column(
                         children: <Widget>[
                           SizedBox(height: 25.0),
                           Text(
-                            _userBloc.error.toString(),
+                            widget.userBloc.error.toString(),
                             style: TextStyle(color: Colors.red),
                           )
                         ],

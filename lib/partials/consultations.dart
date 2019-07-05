@@ -6,9 +6,10 @@ import 'package:heart_monitor/services/response/consultation_response.dart';
 import 'package:provider/provider.dart';
 
 class ConsultationsPage extends StatefulWidget {
-  ConsultationsPage({Key key, this.title}) : super(key: key);
+  ConsultationsPage({Key key, this.title, this.userBloc}) : super(key: key);
 
   final String title;
+  final UserBloc userBloc;
 
   @override
   _ConsultationsPageState createState() => _ConsultationsPageState();
@@ -23,14 +24,12 @@ class _ConsultationsPageState extends State<ConsultationsPage> {
   @override
   Widget build(BuildContext context) {
     
-    final _userBloc = Provider.of<UserBloc>(context);
-
     return Scaffold(
       appBar: AppBar(
         title: Text('Consultations')
       ),
       body: FutureBuilder<ConsultationResponse>(
-        future: _userBloc.getConsultations(),
+        future: widget.userBloc.getConsultations(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return _buildConsultations(snapshot.data.consultations);
@@ -83,7 +82,7 @@ class _ConsultationsPageState extends State<ConsultationsPage> {
     // we need to navigate to the heart rate calulator page
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => ScanPage())
+      MaterialPageRoute(builder: (context) => ScanPage(consultation: consulation, userBloc: widget.userBloc))
     );
     print("${consulation.notes}");
   }

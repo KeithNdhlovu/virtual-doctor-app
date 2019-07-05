@@ -27,7 +27,7 @@ class Consultation {
 
   factory Consultation.fromJson(Map<String, dynamic> json) {
     return Consultation(
-      id: json["id"],
+      id: json["c_id"],
       notes: json["notes"],
       status: json["status"],
       doctorNotes: json["doctor_notes"],

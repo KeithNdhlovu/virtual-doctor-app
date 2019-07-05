@@ -30,13 +30,13 @@ class MyApp extends StatelessWidget {
                     body1: TextStyle(fontSize: 15, color: Colors.white),
               )
             ),
-            home: Scaffold(body: SetupPage()),
+            home: Scaffold(body: SetupPage(userBloc: user)),
             routes: <String, WidgetBuilder> {
-              '/home': (BuildContext context) => new HomePage(),
-              '/setup': (BuildContext context) => new SetupPage(),
-              '/login': (BuildContext context) => new LoginPage(),
-              '/blood-pressure': (BuildContext context) => new BloodPressurePage(),
-              '/consultations': (BuildContext context) => new ConsultationsPage(),
+              '/home': (BuildContext context) => new HomePage(userBloc: user),
+              '/setup': (BuildContext context) => new SetupPage(userBloc: user),
+              '/login': (BuildContext context) => new LoginPage(userBloc: user),
+              '/blood-pressure': (BuildContext context) => new BloodPressurePage(userBloc: user),
+              '/consultations': (BuildContext context) => new ConsultationsPage(userBloc: user),
             },
           );
         },
