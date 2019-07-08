@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:heart_monitor/services/api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:heart_monitor/services/response/user_response.dart';
 
@@ -11,21 +12,12 @@ class UserApiProvider {
   static const String USER_ENDPOINT       = "/api/user";
   static const String UPDATE_CONSULTATION = "/api/consultation/update";
 
-  final Dio _dio = Dio();
+  final _dio = API().getDio();
 
   Future<UserResponse> getUser(String host) async {
     try {
-      
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      String token = prefs.getString('access_token');
 
-      Response response = await _dio.get(host + USER_ENDPOINT, 
-        options: Options(
-          headers: {
-            HttpHeaders.authorizationHeader: "Bearer " + token,
-          }
-        )
-      );
+      Response response = await _dio.get(host + API.USER_ENDPOINT);
       
       return UserResponse.fromJson(response.data);
     } catch (error, stacktrace) {
@@ -38,7 +30,7 @@ class UserApiProvider {
   Future postLogin(String host, String username, String password) async {
     try {
       
-      Response response = await _dio.post(host + LOGIN_ENDPOINT, data: {
+      Response response = await _dio.post(host + API.LOGIN_ENDPOINT, data: {
         "email": username,
         "password": password
       });
@@ -68,16 +60,30 @@ class UserApiProvider {
   Future<Map> postBloodPressure(String host, String readings, int consultaionID) async {
     try {
       
-      Response response = await _dio.post(host + UPDATE_CONSULTATION, data: {
-        "blood_pressure": readings,
-        "consultation_id": consultaionID
-      });
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String token = prefs.getString('access_token');
+
+      Response response = await _dio.post(host + API.UPDATE_CONSULTATION, 
+        data: {
+          "blood_pressure": readings,
+          "consultation_id": consultaionID
+        },
+        options: Options(
+          headers: {
+            HttpHeaders.authorizationHeader: "Bearer " + token,
+          }
+        )
+      );
       
+      print("Success: ${response}");
+
       return {
         "success": response.data["success"],
-      };      
+      };
     } catch (error) {
       
+      print("Error: ${error.response}");
+
       if (error is DioError && error.response != null) {
         return {
           "error": error.response.data["error"]

@@ -38,11 +38,15 @@ class _ScanPageState extends State<ScanPage> {
         _counter--;
       });
 
-      print("Counter: ${_counter.toString()}");
-
       if (_counter == 0) {
         // when the countner reaches zero we redirect to the random heart rate page
         _buttonPressed = false;
+        
+        //reset the counter
+        setState(() {
+          _counter = 5; 
+        });
+
         // widget.consultation
         Navigator.push(
           context,

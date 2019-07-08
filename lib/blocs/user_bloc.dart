@@ -3,7 +3,6 @@ import 'package:heart_monitor/models/consultation.dart';
 import 'package:heart_monitor/partials/home.dart';
 import 'package:heart_monitor/repository/consultation_repository.dart';
 import 'package:heart_monitor/repository/user_repository.dart';
-import 'package:heart_monitor/services/response/consultation_response.dart';
 import 'package:heart_monitor/services/response/user_response.dart';
 
 class UserBloc with ChangeNotifier {
