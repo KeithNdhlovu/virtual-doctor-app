@@ -3,10 +3,9 @@ import 'package:heart_monitor/blocs/user_bloc.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
-  LoginPage({Key key, this.title, this.userBloc}) : super(key: key);
+  LoginPage({Key key, this.title}) : super(key: key);
 
   final String title;
-  final UserBloc userBloc;
 
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -33,17 +32,17 @@ class _LoginPageState extends State<LoginPage> {
     });
   }
 
-  _handlePostLogin() {
+  _handlePostLogin(UserBloc _userBloc) {
 
-    if (widget.userBloc.loading == false) {
-      return widget.userBloc.postLogin(this._username, this._password);
+    if (_userBloc.loading == false) {
+      _userBloc.postLogin(this._username, this._password);
     }
-
-    return null;
   }
 
   @override
   Widget build(BuildContext context) {
+
+    final _userBloc = Provider.of<UserBloc>(context);
 
     final emailField = TextField(
       style: style,
@@ -56,7 +55,7 @@ class _LoginPageState extends State<LoginPage> {
     );
 
     // Update the build context of the user bloc
-    widget.userBloc.context = context;
+    _userBloc.context = context;
 
     final passwordField = TextField(
       obscureText: true,
@@ -76,8 +75,8 @@ class _LoginPageState extends State<LoginPage> {
       child: MaterialButton(
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        onPressed: _handlePostLogin(),
-        child: !widget.userBloc.loading ? 
+        onPressed: !_userBloc.loading ? () => _handlePostLogin(_userBloc) : null,
+        child: !_userBloc.loading ? 
           Text("Login", textAlign: TextAlign.center, style: style.copyWith(color: Colors.white, fontWeight: FontWeight.bold)) : 
           Text("Loading ...", style: style.copyWith(color: Colors.white, fontWeight: FontWeight.bold))
       ),
@@ -115,11 +114,11 @@ class _LoginPageState extends State<LoginPage> {
                   child: Padding(
                     padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
                     child: Column(children: <Widget>[
-                      (widget.userBloc.error != "") ? Column(
+                      (_userBloc.error != "") ? Column(
                         children: <Widget>[
                           SizedBox(height: 25.0),
                           Text(
-                            widget.userBloc.error.toString(),
+                            _userBloc.error.toString(),
                             style: TextStyle(color: Colors.red),
                           )
                         ],

@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:heart_monitor/partials/consultations.dart';
 import 'package:heart_monitor/services/response/user_response.dart';
-import 'package:provider/provider.dart';
 import 'package:heart_monitor/partials/login.dart';
 import 'package:heart_monitor/blocs/user_bloc.dart';
-import 'package:heart_monitor/blocs/setup_bloc.dart';
+import 'package:provider/provider.dart';
 
 class SetupPage extends StatefulWidget {
-  SetupPage({Key key, this.userBloc}) : super(key: key);
-  final UserBloc userBloc;
+  SetupPage({Key key}) : super(key: key);
 
   _SetupPageState createState() => _SetupPageState();
 }
@@ -20,35 +18,34 @@ class _SetupPageState extends State<SetupPage> {
     fontSize: 20.0
   );
 
-  _fetchSessionAndNavigate(BuildContext context) async {
+  _fetchSessionAndNavigate(BuildContext context, UserBloc _userBloc) async {
     // Has the user alredy loged in, then we need to show them the list of consultations
-    final user = await widget.userBloc.user;
+    final user = await _userBloc.user;
 
     if (user is UserResponse && user.user != null) {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => ConsultationsPage(title: "Consultations", userBloc: widget.userBloc))
+        MaterialPageRoute(builder: (context) => ConsultationsPage(title: "Consultations"))
       );
       return;
     }
     
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => LoginPage(title: "Login", userBloc: widget.userBloc))
+      MaterialPageRoute(builder: (context) => LoginPage(title: "Login"))
     );
 
-    // Navigator.of(context)
-    //   .pushReplacementNamed("/login");
   }
 
   @override
   Widget build(BuildContext context) {
+    final _userBloc = Provider.of<UserBloc>(context);
 
     final _ipField = TextField(
       style: style,
       onChanged: (String ip) {
-        widget.userBloc.ipAddress = ip;
-        widget.userBloc.host = "http://" + ip;
+        _userBloc.ipAddress = ip;
+        _userBloc.host = "http://" + ip;
       },
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
@@ -66,13 +63,13 @@ class _SetupPageState extends State<SetupPage> {
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () {
 
-          if (widget.userBloc.ipAddress.isEmpty) {
+          if (_userBloc.ipAddress.isEmpty) {
             final snackBar = SnackBar(content: Text("Please Enter IP Address to continue"));
             Scaffold.of(context).showSnackBar(snackBar);
             return;
           }
 
-          this._fetchSessionAndNavigate(context);
+          this._fetchSessionAndNavigate(context, _userBloc);
 
         },
         child: Text("Continue",

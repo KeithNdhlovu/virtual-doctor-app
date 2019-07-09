@@ -8,7 +8,7 @@ class API {
   static const String USER_ENDPOINT          = BASE_URL + "user";
   static const String LOGIN_ENDPOINT         = BASE_URL + "login";
   static const String UPDATE_CONSULTATION    = BASE_URL + "consultation/update";
-  static const String CONSULTATIONS_ENDPOINT = BASE_URL + "consultaions";
+  static const String CONSULTATIONS_ENDPOINT = BASE_URL + "consultations";
 
   final Dio _dio = Dio();
 

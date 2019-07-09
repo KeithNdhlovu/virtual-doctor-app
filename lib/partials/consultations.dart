@@ -6,10 +6,9 @@ import 'package:heart_monitor/services/response/consultation_response.dart';
 import 'package:provider/provider.dart';
 
 class ConsultationsPage extends StatefulWidget {
-  ConsultationsPage({Key key, this.title, this.userBloc}) : super(key: key);
+  ConsultationsPage({Key key, this.title}) : super(key: key);
 
   final String title;
-  final UserBloc userBloc;
 
   @override
   _ConsultationsPageState createState() => _ConsultationsPageState();
@@ -23,13 +22,14 @@ class _ConsultationsPageState extends State<ConsultationsPage> {
   
   @override
   Widget build(BuildContext context) {
-    
+    final _userBloc = Provider.of<UserBloc>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Consultations')
       ),
       body: FutureBuilder<ConsultationResponse>(
-        future: widget.userBloc.getConsultations(),
+        future: _userBloc.getConsultations(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return _buildConsultations(snapshot.data.consultations);

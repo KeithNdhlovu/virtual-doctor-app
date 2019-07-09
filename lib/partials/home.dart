@@ -30,7 +30,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
 
     // does the user have an access token stored somewhere?
-    return ConsultationsPage(userBloc: widget.userBloc);
+    return ConsultationsPage();
   }
 
   _fetchSessionAndNavigate() async {

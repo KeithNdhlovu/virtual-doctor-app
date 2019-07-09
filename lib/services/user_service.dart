@@ -8,9 +8,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:heart_monitor/services/response/user_response.dart';
 
 class UserApiProvider {
-  static const String LOGIN_ENDPOINT      = "/api/login";
-  static const String USER_ENDPOINT       = "/api/user";
-  static const String UPDATE_CONSULTATION = "/api/consultation/update";
 
   final _dio = API().getDio();
 

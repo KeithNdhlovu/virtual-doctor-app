@@ -4,11 +4,10 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:heart_monitor/services/api.dart';
 import 'package:heart_monitor/services/response/consultation_response.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class ConsultationApiProvider {
-  final String _endpoint = "/api/consultations";
-  final Dio _dio = Dio();
+  
+  final _dio = API().getDio();
 
   Future<ConsultationResponse> getConsultations(String host) async {
     try {
