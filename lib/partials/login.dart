@@ -63,10 +63,10 @@ class _LoginPageState extends State<LoginPage> {
       style: style,
       onChanged: this._onPasswordChange,
       decoration: InputDecoration(
-          contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-          hintText: "Password",
-          border:
-              OutlineInputBorder(borderRadius: BorderRadius.circular(5))),
+        contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+        hintText: "Password",
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(5))
+      ),
     );
 
     final loginButon = Material(
