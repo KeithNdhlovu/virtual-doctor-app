@@ -94,6 +94,7 @@ class _SetupPageState extends State<SetupPage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
+              SizedBox(height: 50.0),
               Padding(
                 padding: EdgeInsets.only(bottom: 20, top: 20),  
                 child: SizedBox(

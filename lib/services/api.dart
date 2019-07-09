@@ -5,10 +5,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class API {
   static const String BASE_URL               = "/api/";
-  static const String USER_ENDPOINT          = BASE_URL + "/user";
-  static const String LOGIN_ENDPOINT         = BASE_URL + "/login";
-  static const String UPDATE_CONSULTATION    = BASE_URL + "/consultation/update";
-  static const String CONSULTATIONS_ENDPOINT = BASE_URL + "/consultaions";
+  static const String USER_ENDPOINT          = BASE_URL + "user";
+  static const String LOGIN_ENDPOINT         = BASE_URL + "login";
+  static const String UPDATE_CONSULTATION    = BASE_URL + "consultation/update";
+  static const String CONSULTATIONS_ENDPOINT = BASE_URL + "consultaions";
 
   final Dio _dio = Dio();
 
@@ -16,7 +16,7 @@ class API {
     int maxCharactersPerLine = 200;
 
     _dio.interceptor.request.onSend = (Options options) async {
-      print("--> ${options.method} ${options.path}");
+      print("--> ${options.method} ${options.path} ${options.data}");
       print("Content type: ${options.contentType}");
       print("<-- END HTTP");
 
@@ -24,9 +24,12 @@ class API {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String token = prefs.getString('access_token');
       
-      options.headers = {
-        HttpHeaders.authorizationHeader: "Bearer " + token,
-      };
+      if (token != null) {
+
+        options.headers = {
+          HttpHeaders.authorizationHeader: "Bearer " + token,
+        };
+      }
 
       return options;
     };

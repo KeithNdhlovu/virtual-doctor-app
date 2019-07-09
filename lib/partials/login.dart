@@ -33,6 +33,15 @@ class _LoginPageState extends State<LoginPage> {
     });
   }
 
+  _handlePostLogin() {
+
+    if (widget.userBloc.loading == false) {
+      return widget.userBloc.postLogin(this._username, this._password);
+    }
+
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -67,7 +76,7 @@ class _LoginPageState extends State<LoginPage> {
       child: MaterialButton(
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        onPressed: () => !widget.userBloc.loading ? widget.userBloc.postLogin(this._username, this._password) : null,
+        onPressed: _handlePostLogin(),
         child: !widget.userBloc.loading ? 
           Text("Login", textAlign: TextAlign.center, style: style.copyWith(color: Colors.white, fontWeight: FontWeight.bold)) : 
           Text("Loading ...", style: style.copyWith(color: Colors.white, fontWeight: FontWeight.bold))
