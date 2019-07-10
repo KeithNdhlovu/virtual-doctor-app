@@ -32,7 +32,7 @@ class _ConsultationsPageState extends State<ConsultationsPage> {
         future: _userBloc.getConsultations(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return _buildConsultations(snapshot.data.consultations);
+            return _buildConsultations(snapshot.data.consultations, _userBloc);
           }
 
           if (snapshot.hasError) {
@@ -45,7 +45,7 @@ class _ConsultationsPageState extends State<ConsultationsPage> {
     );
   }
 
-  Widget _buildConsultations(List<Consultation> _consultations) {
+  Widget _buildConsultations(List<Consultation> _consultations, UserBloc _userBloc) {
 
     return ListView.builder(
       padding: const EdgeInsets.all(16),
@@ -62,14 +62,14 @@ class _ConsultationsPageState extends State<ConsultationsPage> {
           return null;
         }
 
-        return _buildRow(_consultations[index]);
+        return _buildRow(_consultations[index], _userBloc);
       }
     );
   }
 
-  Widget _buildRow(Consultation consulation) {
+  Widget _buildRow(Consultation consulation, UserBloc _userBloc) {
     return ListTile(
-      onTap: () =>  _handleOnItemClick(consulation),
+      onTap: () =>  _handleOnItemClick(consulation, _userBloc),
       title: Text(
         consulation.notes,
         style: const TextStyle(fontSize: 18),
@@ -77,12 +77,12 @@ class _ConsultationsPageState extends State<ConsultationsPage> {
     );
   }
 
-  _handleOnItemClick(Consultation consulation) {
+  _handleOnItemClick(Consultation consulation, UserBloc _userBloc) {
 
     // we need to navigate to the heart rate calulator page
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => ScanPage(consultation: consulation, userBloc: widget.userBloc))
+      MaterialPageRoute(builder: (context) => ScanPage(consultation: consulation, userBloc: _userBloc))
     );
     print("${consulation.notes}");
   }

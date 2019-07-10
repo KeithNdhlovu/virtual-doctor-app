@@ -48,7 +48,7 @@ class _ScanPageState extends State<ScanPage> {
         });
 
         // widget.consultation
-        Navigator.push(
+        Navigator.pushReplacement(
           context,
           MaterialPageRoute(
             builder: (context) => BloodPressurePage(consultation: widget.consultation, userBloc: widget.userBloc)
