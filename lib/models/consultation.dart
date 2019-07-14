@@ -31,8 +31,8 @@ class Consultation {
       notes: json["notes"],
       status: json["status"],
       doctorNotes: json["doctor_notes"],
-      doctor: User.fromJson(json["doctor"]),
-      patient: User.fromJson(json["patient"]),
+      doctor: json["doctor"] != null ? User.fromJson(json["doctor"]) : null,
+      patient: json["patient"] != null ? User.fromJson(json["patient"]) : null,
     );
   }
 

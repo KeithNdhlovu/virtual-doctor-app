@@ -48,19 +48,10 @@ class _ConsultationsPageState extends State<ConsultationsPage> {
   Widget _buildConsultations(List<Consultation> _consultations, UserBloc _userBloc) {
 
     return ListView.builder(
-      padding: const EdgeInsets.all(16),
-      itemBuilder: (BuildContext _context, int i) {
-        
-        if (i.isOdd) {
-          return Divider();
-        }
-
-        final int index = i ~/ 2;
-
-        if (index >= _consultations.length) {
-          // ...then generate 10 more and add them to the 
-          return null;
-        }
+      scrollDirection: Axis.vertical,
+      shrinkWrap: true,
+      itemCount: _consultations.length,
+      itemBuilder: (BuildContext _context, int index) {
 
         return _buildRow(_consultations[index], _userBloc);
       }
@@ -68,13 +59,51 @@ class _ConsultationsPageState extends State<ConsultationsPage> {
   }
 
   Widget _buildRow(Consultation consulation, UserBloc _userBloc) {
-    return ListTile(
-      onTap: () =>  _handleOnItemClick(consulation, _userBloc),
-      title: Text(
-        consulation.notes,
-        style: const TextStyle(fontSize: 18),
+
+    final makeListTile = ListTile(
+        onTap: () =>  _handleOnItemClick(consulation, _userBloc),
+        contentPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+        leading: Container(
+          padding: EdgeInsets.only(right: 12.0),
+          decoration: new BoxDecoration(
+              border: new Border(
+                right: new BorderSide(width: 1.0, color: Colors.white24)
+              )
+          ),
+          child: Icon(Icons.receipt, color: Colors.white),
+        ),
+        title: Text(
+          consulation.notes,
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          overflow: TextOverflow.ellipsis
+        ),
+
+        subtitle: Column(
+          children: <Widget>[
+            Text(""),
+            Row(children: <Widget>[
+              Icon(Icons.account_circle, color: Colors.white),
+              Text(consulation.patient.firstName, style: TextStyle(color: Colors.white), overflow: TextOverflow.ellipsis,)
+            ]),
+            Row(children: <Widget>[
+              Icon(Icons.linear_scale, color: Colors.yellowAccent),
+              Text(consulation.getStatus(), style: TextStyle(color: Colors.white))
+            ],)
+          ],
+        ),
+        trailing:
+            Icon(Icons.keyboard_arrow_right, color: Colors.white, size: 30.0)
+      );
+
+    return Card(
+      elevation: 8.0,
+      margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
+      child: Container(
+        decoration: BoxDecoration(color: Color.fromRGBO(147, 1, 142, 1)),
+        child: makeListTile,
       ),
     );
+
   }
 
   _handleOnItemClick(Consultation consulation, UserBloc _userBloc) {
